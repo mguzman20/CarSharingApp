@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+<div class="columns">
+<div class="column is-2">
+    <div class="card-body">
+        <span class='name'>
+            <% @solicituds.each do |solicitud| %>
+            <% if solicitud.estado == 'aceptada' %>
+                <% if solicitud.user == current_user %>
+                    <p><%= link_to solicitud.publication.user.username, solicitud, :class => "button is-medium is-fullwidth" %></p>
+                <% end %>
+                <% if solicitud.publication.user == current_user %>
+                    <p><%= link_to solicitud.user.username, solicitud, :class => "button is-medium is-fullwidth" %></p>   
+                <% end %>
+            <% end %>
+        <% end %>
+    </span><br>
+</div>
+</div>
+<div class="column is-9">
+<h1 class="title">
+    <% if @solicitud.publication.user == current_user%>
+        <%= @solicitud.user.username %>
+    <% else %>
+        <%= @solicitud.publication.user.username%>
+    <% end %>
+</h1>
+<div class="box" id="scroll-to-bottom" style="width:100%;height:70vh;overflow:auto;">
+
+
+<tbody>
+    <%= turbo_stream_from "messages" %>
+    <div id="messages">
+    <% @messages.each do |message| %>
+        <% if message.user == current_user %>
+            <% if message.solicitud.user == current_user %>
+                <% user2 = message.solicitud.publication.user %>
+            <% else %>
+                <% user2 = message.solicitud.user %>
+            <% end %>
+            <% if user2 == @solicitud.user ||
+            user2 == @solicitud.publication.user %>
+                <div class="columns">
+                <div class="column is-8">
+                </div>
+                <div class="column is-4">
+                <div class="notification is-success is-family-primary is-size-5-tablet">
+                    <%= message.content %>
+                    <p style="text-align: right;"><%= message.created_at.to_s[0,16] %></p>
+                </div>
+                </div>
+                </div>
+            <% end %>
+        <% elsif message.user == @solicitud.user ||
+        message.user == @solicitud.publication.user %>
+            <% if message.solicitud.user == current_user ||
+            message.solicitud.publication.user == current_user %>
+                <div class="columns">
+                <div class="column is-4">
+                <div class="notification is-dark is-family-primary is-size-5-tablet">
+                    <%= message.content %>
+                    <p style="text-align: right;"><%= message.created_at.to_s[0,16] %></p>
+                </div>
+                </div>
+                </div>
+            <% end %>
+        <% end %>
+    <% end %>
+    </div>
+</tbody>
+<br>
+
+</div>
+<%= form_with(model: @message, local: true) do |form| %>
+    <%= hidden_field_tag 'solicitud_id', @solicitud.id %>
+    <table>
+    <th><%= form.text_field :content, :class => "input", :size=>"200" %></th>
+    <th><%= form.submit "Enviar mensaje", :class => "button is-info" %></th>
+    </table>
+<% end %>
+</div>
+</div>
+<script>
+	let scroll_to_bottom = document.getElementById('scroll-to-bottom');
+	scroll_to_bottom.scrollTop = scroll_to_bottom.scrollHeight;
+</script>

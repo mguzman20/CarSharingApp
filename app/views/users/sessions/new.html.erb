@@ -1,0 +1,37 @@
+<br>
+<div class="column is-4 is-offset-1">
+<h2 class="title left">Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="field ">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "input has-background-light", :placeholder => "Email" %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password, autocomplete: "current-password", :class => "input has-background-light", :placeholder => "Password"%>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="columns">
+    <div class="column is-1">
+      <%= f.check_box :remember_me, :class => "checkbox" %>
+    </div>
+    <div class="column">
+      <%= f.label :remember_me, :class => "label" %>
+    </div>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Log in", :class => "button is-info " %>
+  </div>
+<% end %>
+
+<br>
+
+<%= link_to 'Back', '/landing', :class => "button is-info" %>
+
+
+<%= render "users/shared/links" %>
+</div>
+

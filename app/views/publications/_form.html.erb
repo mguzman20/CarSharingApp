@@ -1,0 +1,96 @@
+<%= form_with(model: publication, local: true) do |form| %>
+  <% if publication.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(publication.errors.count, "error") %> prohibited this publication from being saved:</h2>
+
+      <ul>
+        <% publication.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :dia, :class => "label" %>
+    <div class="control has-icons-middle">
+
+      <span class="icon is-small is-middle">
+        <i class="fas fa-calendar"></i>
+      </span>
+      <p>
+        <%= form.date_field :dia, :id => 'date' %>
+      </p>
+    <script>
+      bulmaCalendar.attach('#date', {
+      dateFormat: "DD-MMM-YYYY",
+      type: 'date',
+      showClearButton: false
+      });
+      document.querySelector('#date').bulmaCalendar.on('select', date => {console.log(date)});
+    </script>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :salida, :class => "label" %>
+    <div class="control has-icons-left">
+      <%= form.text_field :salida, :class => "input is-rounded" %>
+      <span class="icon is-small is-left">
+        <i class="fas fa-map-pin"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :hora, :class => "label" %>
+    <div class="control has-icons-middle">
+      <span class="icon is-small is-middle">
+        <i class="fas fa-clock"></i>
+      </span>
+      <%= form.time_field :hora, :class => "input is-rounded", value: "#{@publication.hora}" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipo, :class => "label" %>
+    <div class="control has-icons-middle">
+      <span class="icon is-small is-middle">
+        <i class="fas fa-exchange-alt"></i>
+      </span>
+      <div class="select">
+        <%= form.select :tipo, {ida: "ida",
+         vuelta: "vuelta"},
+         { :class => 'form-control' } 
+         %>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :limite, :class => "label" %>
+    <div class="control has-icons-left">
+      <%= form.text_field :limite, :class => "input is-rounded" %>
+      <span class="icon is-small is-left">
+        <i class="fas fa-car"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :direccion, :class => "label" %>
+    <div class="control has-icons-left">
+      <%= form.text_field :direccion, :class => "input is-rounded" %>
+      <span class="icon is-small is-left">
+        <i class="fas fa-graduation-cap"></i>
+      </span>
+    </div>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="actions">
+  <%= form.submit "Crear publicación", :class => "button is-info" %> 
+  </div>
+  <%= link_to 'Back', publications_path, :class => "button is-info"%>
+<% end %>

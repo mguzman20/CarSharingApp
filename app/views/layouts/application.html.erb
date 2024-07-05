@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>ProyectoTurnos</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js"></script>
+    <link href="https://unpkg.com/bulma-calendar@6.0.7/dist/css/bulma-calendar.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bulma-calendar@6.0.7/dist/js/bulma-calendar.min.js"></script>
+  </head>
+
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <nav class="navbar has-background-light" role="navigation" aria-label="main navigation">
+    <div id="navbarBasicExample" class="navbar-menu">
+    <% if current_user %>
+      <div class="horizontalgap" style="width:20px"></div>
+      <figure class="image is-96x96">
+        <img src="https://i.imgur.com/0Gpe5Yl.png">
+      </figure>
+      <div class="horizontalgap" style="width:20px"></div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          <%= current_user.username %>
+        </a>
+
+        <div class="navbar-dropdown">
+          <%= link_to 'Ver perfil', profile_path(current_user.id), :class => "navbar-item" %>
+          <%= link_to "Editar Perfil", edit_user_registration_path, :class => "navbar-item" %>
+        </div>
+      </div>
+      <%= link_to 'Publicaciones', '/publications', :class => "navbar-item" %>
+      <%= link_to 'Ver mis solicitudes', '/solicituds', :class => "navbar-item" %>
+      <%= link_to 'Chats', '/solicituds/chats', :class => "navbar-item" %>
+      <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "navbar-item" %>
+    <% else %>
+    <!-- En otro caso le mostramos las opciones de inicio sesión y registro -->
+      <%= link_to "Iniciar Sesión", new_user_session_path, :class => "navbar-item" %>
+      <%= link_to "Registrarme", new_user_registration_path, :class => "navbar-item" %>
+    <% end %>
+    </div>
+    </nav>
+    <%= yield %>
+  </body>
+</html>

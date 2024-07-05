@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+<div class="columns">
+<div class="column is-2">
+<div class="card no-outline mb-2 room-card">
+    <div class="card-body">
+        <span class='name'>
+            <% @solicituds.each do |solicitud| %>
+            <% if solicitud.estado == 'aceptada' %>
+                <% if solicitud.user == current_user %>
+                    <p><%= link_to solicitud.publication.user.username, solicitud, :class => "button is-medium is-fullwidth" %></p>
+                <% end %>
+                <% if solicitud.publication.user == current_user %>
+                    <p><%= link_to solicitud.user.username, solicitud, :class => "button is-medium is-fullwidth" %></p>
+                <% end %>
+            <% end %>
+        <% end %>
+    </span>
+</div>
+</div>
+</div>

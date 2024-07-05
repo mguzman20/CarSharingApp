@@ -1,0 +1,61 @@
+
+<% if current_user %>
+    <br>
+
+    <div class="columns">
+      <div class="column is-5 is-offset-1">
+        <div class="box">
+          <h1 class="title">Perfil</h1>
+          <% @user =  User.find(params[:id])%>
+          <article class="media">
+            <div class="media-left">
+            <%= image_tag @user.photo_url.to_s, style: 'height:100px;width:auto;'%> 
+            </div>
+
+
+            <div class="media-content">
+              <p>Nombre: <%= @user.name %><br>
+              Usuario: <%= @user.username %><br>
+              Edad: <%= @user.age %><br>
+              Email: <%= @user.email %><br>
+              Trabajo: <%= @user.work %><br>
+              Telefono: <%= @user.phone %></p>
+            </div>
+
+            <div class="media-right">
+            <% if current_user == @user %>
+            <%= link_to "Editar", edit_user_registration_url(@user), :class => "button is-info" %><br><br>
+            <%= link_to "Back", publications_url(@user), :class => "button is-info" %>
+            <% end %>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="column is-5">
+        <div class="box">
+        <h2 class="title">Reseñas
+
+          <% if current_user != @user %>
+          <%= link_to "Crear reseña", new_review_path(@user.id), :class => "button is-info" %>
+          <% end %>
+        </h2>
+          <table class="table is-striped is-hoverable is-fullwidth">
+                <tr>
+                  <thead>
+                    <th>Calificación</th>
+                    <th>Descripción</th>
+                    <th colspan="2"> </th>
+                  </thead>
+                </tr>
+                  <% @reviews.each do |review|%>
+                <tr>
+                  <td><%= review.calificacion %></td>
+                  <td><%= review.contenido %></td>
+                </tr>
+                  <% end %>
+          </table>
+      </div>
+      </div>
+    </div>
+<% end %>

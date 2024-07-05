@@ -1,0 +1,58 @@
+<% if current_user %>
+<div class="column is-4 is-offset-1">
+  <h1 class="title mt-5">Publicaciones</h1>
+  <%= link_to 'New Publication', '/publications/new', :class => "button is-info" %>
+  <br>
+  <br>
+  <%= form_tag(publications_path, method: :get) do %>
+    Filtre por <%= select_tag :tipo , options_for_select([["Todos", ''],["idas",'ida'],["Vueltas",'vuelta']], params[:tipo]), class:"select"%>
+    <%= submit_tag 'Search', :class => "button is-info" %>
+  <% end %>
+
+  <br>
+
+
+  <% @publications.each do |publication| %>
+    <article class="box">
+        <div class="content">
+          <h1> <%= publication.user.name %> </h1>
+          <p>Dia: <%= publication.dia %><br>
+          Salida: <%= publication.salida %><br>
+          Hora: <%= publication.hora %><br>
+          Tipo: <%= publication.tipo %><br>
+          Limite: <%= publication.limite %><br>
+          Direccion: <%= publication.direccion %><br>
+          </p>
+        </div>
+        <nav class="level">
+            <div class="level-item ">
+              <%= link_to 'Show', publication, :class => "button is-info" %>
+            </div>
+            <% if current_user == publication.user %>
+            <div class="level-item">
+              <%= link_to 'Edit', edit_publication_path(publication), :class => "button is-info" %>
+            </div>
+            <div class="level-item">
+              <%= link_to 'Delete', publication, method: :delete, data: { confirm: 'Are you sure?' }, :class => "button is-info" %>
+            </div>
+              <% end %>
+            </a>
+        </nav>
+      
+    </article>
+  <% end %>
+
+ 
+
+  <br>
+
+<% else %>
+  <br>
+  <h1 class="title"> Bienvenido a App turnos </h1>
+  <br>
+  <p class="subtitle"> Tienes que estar logeado para acceder a la aplicación </p>
+  <bt>
+  <%= link_to 'Ver publicaciones sin iniciar sesión', '/publications/no_reg' %>
+
+<% end %>
+</div>

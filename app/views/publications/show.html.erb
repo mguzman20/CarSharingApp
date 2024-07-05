@@ -1,0 +1,73 @@
+<br>
+<div class="columns">
+  <div class="column is-4 is-offset-1">
+    <div class="box">
+      <h1 class="title">Publicación</h1>
+      <p id="notice"><%= notice %></p>
+
+      <div class="content">
+          <p>Creador: <%= @publication.user.name%><br>
+          Dia: <%= @publication.dia %><br>
+          Salida: <%= @publication.salida %><br>
+          Hora: <%= @publication.hora %><br>
+          Tipo: <%= @publication.tipo %><br>
+          Limite: <%= @publication.limite %><br>
+          Direccion: <%= @publication.direccion %><br>
+          </p>
+      </div>
+      
+    </div>
+  <%= link_to 'Back', publications_path, :class => "button is-info" %>
+  <%= link_to "Ver perfil", profile_path(@publication.user), :class => "button is-info" %>
+  <% if current_user == @publication.user %>
+  <%= link_to 'Edit', edit_publication_path(@publication), :class => "button is-info" %>
+  <%= link_to "Eliminar", @publication, method: :delete, data: { confirm: "Deseas eliminar esta publicación?"}, :class => "button is-info" %>
+  <% end %>
+  <br><br>
+
+  </div>
+
+  <div class="column is-6">
+    <div class="box">
+    <h1 class="title">Solicitudes
+    <%= link_to "Crear solicitud", new_solicitud_path(@publication.id), :class => "button is-info" %>
+    </h1>
+    <table class="table is-striped is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th>De</th>
+          <th>Descripcion</th>
+          <th>Estado</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @solicituds.each do |solicitud| %>
+          <tr>
+            <td><%= solicitud.user.name %></td>
+            <td><%= solicitud.descripcion %></td>
+            <td><%= solicitud.estado %></td>
+            <td><% if current_user == @publication.user %>
+                  <%= form_with model: solicitud, method: :patch, local: true do |form| %>
+                    <%= form.hidden_field :estado, value: 'aceptada' %>
+                    <%= form.submit "Aceptar", :class => "button is-info" %>
+                  <% end %>
+
+                  <%= form_with(model: solicitud, local: true) do |form| %>
+                    <%= form.hidden_field :estado, value: 'rechazada', type: "hidden" %>
+                    <%= form.submit "Rechazar", :class => "button is-info" %>
+                  <% end %>
+                <% end %>
+
+                <% if current_user == solicitud.user %>
+                  <%= link_to "Eliminar", solicitud, method: :delete, data: { confirm: "Desea eliminar esta solicitud?"} , :class => "button is-info" %>
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>

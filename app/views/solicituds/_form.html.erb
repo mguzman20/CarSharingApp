@@ -1,0 +1,26 @@
+<%= form_with(model: solicitud, local: true) do |form| %>
+  <% if solicitud.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(solicitud.errors.count, "error") %> prohibited this solicitud from being saved:</h2>
+
+      <ul>
+        <% solicitud.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :descripcion, :class => "label" %>
+    <%= form.text_field :descripcion, :class => "input is-rounded" %>
+  </div>
+
+<br>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :publication_id, value: @publication_id %>
+
+  <div class="actions" >
+  <%= form.submit "Crear solicitud", :class => "button is-info" %>  </div>
+<% end %>

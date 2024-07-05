@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<div class="column is-8 is-offset-1">
+<div class="box">
+<h1 class="title">Solicitudes</h1>
+
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>Para</th>
+      <th>Descripcion</th>
+      <th>Estado</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @solicituds.each do |solicitud| %>
+      <% if solicitud.user == current_user %>
+      <tr>
+        <td><%= solicitud.publication.user.username %></td>
+        <td><%= solicitud.descripcion %></td>
+        <td><%= solicitud.estado %></td>
+        <td><%= link_to 'Mostrar turno', solicitud.publication, :class => "button is-info" %></td>
+        <td><%= link_to 'Delete', solicitud, method: :delete, data: { confirm: 'Are you sure?' }, :class => "button is-info" %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back', '/publications', :class => "button is-info" %>
+</div>
+</div>

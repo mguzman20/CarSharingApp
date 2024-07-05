@@ -1,0 +1,72 @@
+<br>
+<div class="column is-4 is-offset-1">
+<h2 class="title">Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+<br>
+  <div class="field ">
+    <%= f.label :photo, :class => "label" %>
+    <%= f.file_field :photo, autofocus: true, autocomplete: "photo", :class => "input is-rounded"%>
+  </div>
+
+  <div class="field">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "input is-rounded", :placeholder => "Email"%>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", :class => "input is-rounded", :placeholder => "Name"%>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :work, autofocus: true, autocomplete: "work", :class => "input is-rounded", :placeholder => "Work"%>
+  </div>
+  <!-- Añadimos al form original de devise las opciones de agregar un username, phone y age -->
+  <div class="field">
+    <%= f.text_field :username, autofocus: true, autocomplete: "username", :class => "input is-rounded" , :placeholder => "Username"%>
+  </div>
+
+  <div class="field">
+    <%= f.telephone_field :phone, autofocus: true, autocomplete: "phone", :class => "input is-rounded", :placeholder => "Phone"%>
+  </div>
+
+  <div class="field">
+    <%= f.number_field :age, autofocus: true, autocomplete: "age", :class => "input is-rounded", :placeholder => "Age"%>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+<br>
+  <div class="field">
+    <%= f.label :password, :class => "label" %> <i>(leave blank if you don't want to change it)</i>
+    <%= f.password_field :password, autocomplete: "new-password", :class => "input is-rounded" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, :class => "label" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => "input is-rounded" %>
+  </div>
+<br>
+  <div class="field">
+    <%= f.label :current_password, :class => "label" %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", :class => "input is-rounded" %>
+  </div>
+<br>
+  <div class="actions">
+    <%= f.submit "Update", :class => "button is-info" %>
+  </div>
+<% end %>
+<br>
+<h3 class="label">Cancel my account</h3>
+
+<p class="label">Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, :class => "button is-info" %></p>
+
+<br>
+
+<%= link_to "Back", :back, :class => "button is-info" %>
+</div>
+<br><br>
