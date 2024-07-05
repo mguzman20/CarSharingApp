@@ -1,4 +1,4 @@
-# README
+# Car Sharing app
 
 ## How to run it
 
