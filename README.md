@@ -1,9 +1,24 @@
 # README
 
-El Diagrama entidad relación se encuentra en la carpeta docs
+## How to run it
 
-Este link es la aplicación en Heroku
-https://app-turnos-g23.herokuapp.com/ 
-
-El link para Trello:
-https://trello.com/invite/software_420/5bb1c75c968b97b1e53b9bf2b26c7d21
+1. Create env file with
+```
+DB_URL=
+DB_USERNAME=
+DB_PASSWORD=
+DB_HOST=
+```
+2. Install dependencies
+```
+bundle install
+```
+3. Migrate DB
+```
+rails db:create
+rails db:migrate
+```
+4. Run it
+```
+rails s
+```
